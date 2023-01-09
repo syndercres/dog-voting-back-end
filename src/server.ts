@@ -15,7 +15,7 @@ const app = express();
 
 app.use(express.json()); //add JSON body parser to each following route handler
 app.use(cors()); //add CORS support to each following route handler
-
+//-----------------------------------------------------------------------------------------------Requests from front end
 app.get("/", async (req, res) => {
   res.json({ msg: "Hello! There's nothing interesting for GET /" });
 });
@@ -31,7 +31,29 @@ app.get("/health-check", async (req, res) => {
     res.status(500).send("An error occurred. Check server logs.");
   }
 });
+//-----------------------------------------------------------------------------------------------get request for all data from votes table
+app.get("/votes", async (req, res) => {
+  const breedsList = await client.query(
+    "SELECT * FROM votes"
+  );
+  res.status(200).json(breedsList);
+});
 
+//-----------------------------------------------------------------------------------------------post breed/vote to votes table
+// app.post("/paste", async (req, res) => {
+  
+//   const breedName = req.body.name;
+//   const breedVotes = 1;
+//   const text = "INSERT INTO votes(name, votes) VALUES($1,$2) RETURNING *";
+//   const values = [breedName, breedVotes];
+
+//   const postData = await client.query(text, values);
+
+//   res.status(201).json(postData);
+// });
+
+
+//-----------------------------------------------------------------------------------------------connect to database
 connectToDBAndStartListening();
 
 async function connectToDBAndStartListening() {

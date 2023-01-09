@@ -1,8 +1,24 @@
-DROP TABLE IF EXISTS food;
-
-CREATE TABLE  food (
-    id          serial PRIMARY KEY,
-    title       varchar(40) NOT NULL
+CREATE TABLE votes (
+  id SERIAL,
+  breed VARCHAR(255) PRIMARY KEY,
+  votes INTEGER
 );
 
-INSERT INTO food (title) VALUES ('sourdough'), ('olive oil'), ('pizza'), ('picanha'), ('gorgonzola'), ('basil');
+
+INSERT INTO votes (breed, votes)
+VALUES 
+  ('Labrador-Retriever', 10),
+  ('German-Shepherd', 9),
+  ('Golden-Retriever', 8),
+  ('French-Bulldog', 7),
+  ('Bulldog', 6),
+  ('Poodle', 5),
+  ('Rottweiler', 4),
+  ('Yorkshire-Terrier', 3),
+  ('Boxer', 2),
+  ('Siberian-Husky', 1),
+  ('Dalmatian', 1),
+  ('Pomeranian', 1),
+  ('Shih-Tzu', 1),
+  ('Beagle', 1),
+  ('Chihuahua', 1)
