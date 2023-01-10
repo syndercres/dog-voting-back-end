@@ -34,7 +34,7 @@ app.get("/health-check", async (req, res) => {
 //-----------------------------------------------------------------------------------------------get request for all data from votes table
 app.get("/votes", async (req, res) => {
   const breedsList = await client.query(
-    "SELECT * FROM votes ORDER BY likes ASC LIMIT 10"
+    "SELECT * FROM votes ORDER BY likes DESC LIMIT 10"
   );
   res.status(200).json(breedsList);
 });
