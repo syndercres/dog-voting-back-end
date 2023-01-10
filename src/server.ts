@@ -34,24 +34,28 @@ app.get("/health-check", async (req, res) => {
 //-----------------------------------------------------------------------------------------------get request for all data from votes table
 app.get("/votes", async (req, res) => {
   const breedsList = await client.query(
-    "SELECT * FROM votes"
+    "SELECT * FROM votes ORDER BY likes ASC LIMIT 10"
   );
   res.status(200).json(breedsList);
 });
 
 //-----------------------------------------------------------------------------------------------post breed/vote to votes table
-// app.post("/paste", async (req, res) => {
-  
-//   const breedName = req.body.name;
-//   const breedVotes = 1;
-//   const text = "INSERT INTO votes(name, votes) VALUES($1,$2) RETURNING *";
-//   const values = [breedName, breedVotes];
+app.post("/votes", async (req, res) => {
+  const breedName = req.body.breed;
 
-//   const postData = await client.query(text, values);
+  const text = `INSERT INTO votes(breed, likes)
+  VALUES($1,$2) 
+  ON CONFLICT (breed)
+  DO UPDATE SET likes = votes.likes + 1
+  RETURNING *
+`;
 
-//   res.status(201).json(postData);
-// });
+  const values = [breedName, 1];
 
+  const postData = await client.query(text, values);
+
+  res.status(201).json(postData);
+});
 
 //-----------------------------------------------------------------------------------------------connect to database
 connectToDBAndStartListening();

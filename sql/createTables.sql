@@ -22,3 +22,13 @@ VALUES
   ('Shih-Tzu', 1),
   ('Beagle', 1),
   ('Chihuahua', 1)
+
+
+  IF EXISTS (SELECT breed FROM votes WHERE breed = 'dog') THEN
+  UPDATE votes
+  SET votes = votes + 1
+  WHERE breed = 'dog';
+ELSE
+  INSERT INTO votes (breed, votes)
+  VALUES ('dog', 1);
+END IF;
